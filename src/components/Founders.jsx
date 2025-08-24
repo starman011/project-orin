@@ -18,7 +18,7 @@ const Founders = () => {
     },
     {
       initials: 'SH.',
-      name: 'Saffeerul Haque Syed',
+      name: 'Safeerul Haque Syed',
       role: 'CEO, CFO & Co-Founder',
       bio: 'Technical architect behind our AI platform. Expert in machine learning and distributed systems.'
     },
