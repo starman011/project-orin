@@ -1,6 +1,6 @@
 .founders {
     padding: var(--section-padding);
-    background: linear-gradient(135deg, #f8f9fa 0%, var(--light) 100%);
+    background: linear-gradient(135deg, #000000 0%, var(--black) 100%);
   }
   
   .founders-grid {
@@ -44,13 +44,13 @@
   }
   
   .founder-role {
-    color: var(--gray);
+    color: var(--black);
     font-size: 16px;
     margin-bottom: 15px;
   }
   
   .founder-bio {
-    color: var(--gray);
+    color: var(--black);
     font-size: 14px;
     line-height: 1.6;
   }

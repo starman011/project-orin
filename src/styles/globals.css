@@ -7,8 +7,11 @@
   :root {
     --primary: #c9ff00;
     --dark: #0a0a0a;
-    --light: #ffffff;
-    --gray: #6b7280;
+    --light: #6682ff;
+    --beige: #EDE8D0;
+    --beige-dark: #e8e2d5;
+    --beige-light: #fdfcf8;
+    --gray: #EDE8D0;
     --section-padding: 100px 0;
   }
   
@@ -20,7 +23,6 @@
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
     color: var(--dark);
-    overflow-x: hidden;
     background: var(--light);
   }
   
@@ -36,13 +38,13 @@
   }
   
   .section-header h2 {
-    font-size: clamp(32px, 4vw, 48px);
+    font-size: clamp(28px, 4vw, 48px);
     font-weight: 800;
     margin-bottom: 20px;
   }
   
   .section-header p {
-    font-size: 18px;
+    font-size: clamp(16px, 2vw, 18px);
     color: var(--gray);
     max-width: 600px;
     margin: 0 auto;
@@ -59,6 +61,7 @@
     display: inline-block;
     border: 2px solid var(--primary);
     cursor: pointer;
+    font-size: clamp(14px, 2vw, 16px);
   }
   
   .btn-primary:hover {
@@ -77,6 +80,7 @@
     border: 2px solid var(--dark);
     display: inline-block;
     cursor: pointer;
+    font-size: clamp(14px, 2vw, 16px);
   }
   
   .btn-secondary:hover {
@@ -84,3 +88,77 @@
     color: var(--light);
     transform: translateY(-2px);
   }
+  
+  /* Glass morphism with beige tint */
+  .mission-card,
+  .founder-card,
+  .pricing-card,
+  .contact-form {
+    background: rgba(250, 248, 243, 0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(232, 226, 213, 0.5);
+  }
+  
+  .pricing-card.featured {
+    background: rgba(10, 10, 10, 0.9) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(201, 255, 0, 0.2);
+  }
+  
+  /* Mobile Responsive Adjustments */
+  @media (max-width: 768px) {
+    :root {
+      --section-padding: 60px 0;
+    }
+  
+    .section-header {
+      margin-bottom: 40px;
+    }
+  
+    .btn-primary,
+    .btn-secondary {
+      padding: 10px 24px;
+      font-size: 14px;
+    }
+  
+    .container {
+      padding: 0 20px;
+    }
+  }
+  
+  /* Hero section transparency */
+  .hero {
+    background: transparent !important;
+  }
+  
+  .hero-visual-box {
+    background: rgba(201, 255, 0, 0.85) !important;
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Section backgrounds */
+  .mission,
+  .founders,
+  .pricing,
+  .contact,
+  .newsletter {
+    background: transparent !important;
+  }
+  
+  /* Footer with glass effect */
+  .footer {
+    background: rgba(10, 10, 10, 0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  
+  /* Navbar glass effect with beige */
+  .navbar {
+    background: transparent !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: none;
+  }
+  

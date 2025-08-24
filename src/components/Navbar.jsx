@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ currentSection }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -28,11 +28,36 @@ const Navbar = () => {
         <div className="logo">Orin</div>
         
         <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-          <a onClick={() => scrollToSection('home')}>Home</a>
-          <a onClick={() => scrollToSection('mission')}>Mission</a>
-          <a onClick={() => scrollToSection('founders')}>Team</a>
-          <a onClick={() => scrollToSection('pricing')}>Pricing</a>
-          <a onClick={() => scrollToSection('contact')}>Contact</a>
+          <a 
+            onClick={() => scrollToSection('home')}
+            className={currentSection === 'home' ? 'active' : ''}
+          >
+            Home
+          </a>
+          <a 
+            onClick={() => scrollToSection('mission')}
+            className={currentSection === 'mission' ? 'active' : ''}
+          >
+            Mission
+          </a>
+          <a 
+            onClick={() => scrollToSection('founders')}
+            className={currentSection === 'founders' ? 'active' : ''}
+          >
+            Team
+          </a>
+          <a 
+            onClick={() => scrollToSection('pricing')}
+            className={currentSection === 'pricing' ? 'active' : ''}
+          >
+            Pricing
+          </a>
+          <a 
+            onClick={() => scrollToSection('contact')}
+            className={currentSection === 'contact' ? 'active' : ''}
+          >
+            Contact
+          </a>
           <button className="btn-primary">Get Started</button>
         </div>
 
