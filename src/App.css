@@ -1,9 +1,8 @@
 .App {
   position: relative;
   width: 100%;
-  min-height: 100vh;   
-  overflow-x: hidden;  
-  overflow-y: auto;    
+  height: 100vh;
+  overflow: hidden;
 }
 
 .App.mobile {
@@ -55,10 +54,58 @@
   width: 100%;
 }
 
-#contact {
+/* Special styling for newsletter section with footer */
+#newsletter {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 100vh;
+  max-height: 100vh;
+  position: relative;
+}
+
+/* Container for centering newsletter above footer */
+.newsletter-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px; /* Account for navbar height */
+}
+
+/* Ensure newsletter content is centered */
+#newsletter .newsletter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  width: 100%;
+}
+
+/* Footer stays at bottom */
+#newsletter .footer {
+  flex: 0 0 auto;
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  #newsletter {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .newsletter-wrapper {
+    padding-top: 70px; /* Smaller navbar on mobile */
+  }
+
+  #newsletter .newsletter {
+    padding: 30px 20px;
+  }
 }
 
 .scroll-indicator {
@@ -98,9 +145,8 @@
 .App.desktop body {
   overflow: hidden;
   height: 100%;
-  position: relative;
+  position: fixed;
   width: 100%;
-  height: auto;
 }
 
 /* Mobile styles */
@@ -121,6 +167,17 @@
   .section-wrapper {
     min-height: auto;
     padding: 40px 0;
+  }
+
+  #newsletter {
+    padding: 0;
+    min-height: auto;
+    justify-content: flex-start;
+  }
+
+  #newsletter .newsletter {
+    min-height: auto;
+    padding: 60px 0 40px;
   }
 
   .scroll-indicator {

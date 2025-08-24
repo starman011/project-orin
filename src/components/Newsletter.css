@@ -1,9 +1,10 @@
 .newsletter {
-    padding: var(--section-padding);
+    padding: 0 20px; /* Removed vertical padding as it's handled by wrapper */
     display: flex;
-    flex-direction: column; 
     align-items: center;
-    min-height: auto;      
+    justify-content: center;
+    width: 100%;
+    position: relative;
   }
   
   .newsletter-content {
@@ -11,22 +12,26 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(232, 226, 213, 0.3);
-    border-radius: 30px;
-    padding: 60px;
-    max-width: 800px;
+    border-radius: 25px;
+    padding: 40px 45px; /* Slightly increased for better appearance */
+    max-width: 720px;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    transform: translateY(-20px); /* Slight upward shift for visual balance */
   }
   
   .newsletter-header {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
   
   .newsletter-icon {
     color: var(--primary);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     animation: sparkle 2s ease-in-out infinite;
+    width: 42px;
+    height: 42px;
   }
   
   @keyframes sparkle {
@@ -35,35 +40,39 @@
   }
   
   .newsletter-header h2 {
-    font-size: clamp(32px, 4vw, 48px);
+    font-size: clamp(26px, 3.5vw, 38px);
     font-weight: 800;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    line-height: 1.2;
   }
   
   .newsletter-header p {
-    font-size: clamp(16px, 2vw, 18px);
+    font-size: clamp(14px, 1.8vw, 16px);
     color: var(--black);
-    max-width: 500px;
+    max-width: 480px;
     margin: 0 auto;
+    line-height: 1.5;
   }
   
   .newsletter-form {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
   }
   
   .input-group {
     display: flex;
     gap: 0;
-    max-width: 500px;
-    margin: 0 auto 15px;
-    background: var(--black);
-    border-radius: 60px;
-    padding: 8px;
+    max-width: 460px;
+    margin: 0 auto 12px;
+    background: var(--beige-light);
+    border-radius: 50px;
+    padding: 5px;
     border: 2px solid var(--beige-dark);
     transition: all 0.3s ease;
+    height: 50px;
+    align-items: center;
   }
   
   .input-group:focus-within {
@@ -72,16 +81,19 @@
   }
   
   .input-icon {
-    margin: auto 15px;
+    margin: 0 12px;
     color: var(--black);
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
   }
   
   .input-group input {
     flex: 1;
     border: none;
     background: transparent;
-    padding: 12px 0;
-    font-size: 16px;
+    padding: 8px 0;
+    font-size: 14px;
     outline: none;
     color: var(--dark);
   }
@@ -94,83 +106,97 @@
     background: var(--primary);
     color: var(--dark);
     border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
+    padding: 10px 26px;
+    border-radius: 45px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 16px;
+    font-size: 14px;
+    flex-shrink: 0;
   }
   
   .btn-subscribe:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(201, 255, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(201, 255, 0, 0.3);
   }
   
   .newsletter-privacy {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--black);
+    margin-bottom: 0;
   }
   
   .success-message {
-    padding: 40px;
+    padding: 30px;
   }
   
   .success-message svg {
     color: #10b981;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    width: 42px;
+    height: 42px;
   }
   
   .success-message h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  
+  .success-message p {
+    font-size: 14px;
+    color: var(--black);
   }
   
   .newsletter-features {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 25px;
     flex-wrap: wrap;
+    margin-top: 18px;
   }
   
   .feature {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
+    gap: 6px;
+    font-size: 13px;
     color: var(--black);
   }
   
   .feature-icon {
-    font-size: 20px;
+    font-size: 18px;
   }
   
   /* Mobile Responsive */
   @media (max-width: 768px) {
     .newsletter-content {
-      padding: 40px 20px;
+      padding: 30px 25px;
       border-radius: 20px;
+      transform: translateY(0); /* Remove transform on mobile */
+    }
+  
+    .newsletter-header h2 {
+      font-size: 26px;
     }
   
     .input-group {
       flex-direction: column;
-      padding: 8px;
+      padding: 6px;
+      height: auto;
     }
   
     .input-group input {
-      padding: 12px 15px;
+      padding: 10px 12px;
+      width: 100%;
     }
   
     .btn-subscribe {
       width: 100%;
-      margin-top: 8px;
+      margin-top: 6px;
+      padding: 12px;
     }
   
     .newsletter-features {
-      gap: 20px;
-    }
-  
-    .feature {
-      font-size: 12px;
+      gap: 18px;
     }
   }
