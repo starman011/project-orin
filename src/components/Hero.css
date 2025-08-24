@@ -1,0 +1,105 @@
+.hero {
+    padding: 150px 5% 100px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--light) 0%, #f0fff4 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    opacity: 0.1;
+    top: -200px;
+    right: -200px;
+    animation: float 20s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
+  }
+  
+  .hero-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    z-index: 1;
+    position: relative;
+  }
+  
+  .hero-text h1 {
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 30px;
+  }
+  
+  .hero-text h1 span {
+    background: linear-gradient(135deg, var(--primary) 0%, #a3ff00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .hero-text p {
+    font-size: 20px;
+    color: var(--gray);
+    margin-bottom: 40px;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .hero-buttons button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .hero-visual-box {
+    background: linear-gradient(135deg, var(--primary) 0%, #a3ff00 100%);
+    border-radius: 30px;
+    padding: 60px;
+    box-shadow: 0 30px 60px rgba(201, 255, 0, 0.2);
+    transform: perspective(1000px) rotateY(-5deg);
+    transition: transform 0.3s ease;
+  }
+  
+  .hero-visual-box:hover {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  
+  .hero-visual-content {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .hero-visual-content svg {
+    color: var(--primary);
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  
+    .hero-visual {
+      display: none;
+    }
+  }
