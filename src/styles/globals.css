@@ -24,6 +24,10 @@
     line-height: 1.6;
     color: var(--dark);
     background: var(--light);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: auto;
   }
   
   .container {
@@ -57,15 +61,19 @@
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-block;
     border: 2px solid var(--primary);
     cursor: pointer;
     font-size: clamp(14px, 2vw, 16px);
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   
   .btn-primary:hover {
-    transform: translateY(-2px);
+    transform: translateZ(0) translateY(-2px);
     box-shadow: 0 10px 30px rgba(201, 255, 0, 0.3);
   }
   
@@ -76,17 +84,21 @@
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid var(--dark);
     display: inline-block;
     cursor: pointer;
     font-size: clamp(14px, 2vw, 16px);
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   
   .btn-secondary:hover {
     background: var(--dark);
     color: var(--light);
-    transform: translateY(-2px);
+    transform: translateZ(0) translateY(-2px);
   }
   
   /* Glass morphism with beige tint */
@@ -98,6 +110,10 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(232, 226, 213, 0.5);
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   
   .pricing-card.featured {
@@ -105,6 +121,10 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(201, 255, 0, 0.2);
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   
   /* Mobile Responsive Adjustments */
@@ -136,6 +156,10 @@
   .hero-visual-box {
     background: rgba(201, 255, 0, 0.85) !important;
     backdrop-filter: blur(10px);
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   
   /* Section backgrounds */
@@ -152,6 +176,10 @@
     background: rgba(10, 10, 10, 0.85) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   
   /* Navbar glass effect with beige */
@@ -160,5 +188,9 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: none;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   
