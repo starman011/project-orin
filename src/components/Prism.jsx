@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Renderer, Triangle, Program, Mesh } from "ogl";
 import "./Prism.css";
 
@@ -20,10 +20,38 @@ const Prism = ({
   timeScale = 0.5,
 }) => {
   const containerRef = useRef(null);
+  const [shouldRender, setShouldRender] = useState(false);
+  const initTimeoutRef = useRef(null);
 
+  // Intersection observer to detect visibility
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !shouldRender) {
+          // Delay initialization to allow other components to load first
+          initTimeoutRef.current = setTimeout(() => {
+            setShouldRender(true);
+          }, 100);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(container);
+    return () => {
+      observer.disconnect();
+      if (initTimeoutRef.current) {
+        clearTimeout(initTimeoutRef.current);
+      }
+    };
+  }, [shouldRender]);
+
+  const initWebGL = useCallback(() => {
+    const container = containerRef.current;
+    if (!container || !shouldRender) return;
 
     const H = Math.max(0.001, height);
     const BW = Math.max(0.001, baseWidth);
@@ -44,11 +72,15 @@ const Prism = ({
     const HOVSTR = Math.max(0, hoverStrength || 1);
     const INERT = Math.max(0, Math.min(1, inertia || 0.12));
 
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    // Optimize for performance - reduce quality on slower devices
+    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
     const renderer = new Renderer({
       dpr,
       alpha: transparent,
       antialias: false,
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: false,
+      powerPreference: "high-performance",
     });
     const gl = renderer.gl;
     gl.disable(gl.DEPTH_TEST);
@@ -158,7 +190,7 @@ const Prism = ({
           wob = mat2(c0, c1, c2, c0);
         }
 
-        const int STEPS = 100;
+        const int STEPS = 60;
         for (int i = 0; i < STEPS; i++) {
           p = vec3(f, z);
           p.xz = p.xz * wob;
@@ -451,9 +483,36 @@ const Prism = ({
     inertia,
     bloom,
     suspendWhenOffscreen,
+    shouldRender,
   ]);
 
-  return <div className="prism-container" ref={containerRef} />;
+  // Main WebGL effect
+  useEffect(() => {
+    if (!shouldRender) return;
+    return initWebGL();
+  }, [shouldRender, initWebGL]);
+
+  return (
+    <div className="prism-container" ref={containerRef}>
+      {!shouldRender && (
+        <div 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            fontSize: '14px',
+            opacity: 0.5,
+          }}
+        >
+          Loading...
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Prism;

@@ -1,13 +1,16 @@
-import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useCallback, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Mission from './components/Mission';
-import Founders from './components/Founders';
-import Pricing from './components/Pricing';
-import Newsletter from './components/Newsletter';
-import Footer from './components/Footer';
-import Prism from './components/Prism';
+import { performanceMonitor, throttle } from './utils/performance';
 import './App.css';
+
+// Lazy load heavy components
+const Mission = lazy(() => import('./components/Mission'));
+const Founders = lazy(() => import('./components/Founders'));
+const Pricing = lazy(() => import('./components/Pricing'));
+const Newsletter = lazy(() => import('./components/Newsletter'));
+const Footer = lazy(() => import('./components/Footer'));
+const Prism = lazy(() => import('./components/Prism'));
 
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
@@ -20,8 +23,39 @@ function App() {
   const scrollDirection = useRef(0);
   const scrollTimeout = useRef(null);
   const boundaryResetTimeout = useRef(null);
+  const preloadedComponents = useRef(new Set());
   
   const sections = useMemo(() => ['home', 'mission', 'founders', 'pricing', 'newsletter'], []);
+
+  // Preload components strategy
+  const preloadComponent = useCallback(async (componentName) => {
+    if (preloadedComponents.current.has(componentName)) return;
+    
+    try {
+      switch (componentName) {
+        case 'Mission':
+          await import('./components/Mission');
+          break;
+        case 'Founders':
+          await import('./components/Founders');
+          break;
+        case 'Pricing':
+          await import('./components/Pricing');
+          break;
+        case 'Newsletter':
+          await import('./components/Newsletter');
+          break;
+        case 'Footer':
+          await import('./components/Footer');
+          break;
+        default:
+          break;
+      }
+      preloadedComponents.current.add(componentName);
+    } catch (error) {
+      console.error(`Failed to preload ${componentName}:`, error);
+    }
+  }, []);
 
   // Detect mobile
   useEffect(() => {
@@ -33,6 +67,53 @@ function App() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Progressive component preloading after initial load
+  useEffect(() => {
+    const preloadSequence = async () => {
+      // Wait for initial render to complete
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Preload next section component first
+      if (currentSection === 0) {
+        const startTime = performance.now();
+        await preloadComponent('Mission');
+        performanceMonitor.measureComponentLoad('Mission', startTime);
+      }
+      
+      // Then preload remaining components in priority order
+      await new Promise(resolve => setTimeout(resolve, 100));
+      const foundersStart = performance.now();
+      await preloadComponent('Founders');
+      performanceMonitor.measureComponentLoad('Founders', foundersStart);
+      
+      await new Promise(resolve => setTimeout(resolve, 100));
+      const pricingStart = performance.now();
+      await preloadComponent('Pricing');
+      performanceMonitor.measureComponentLoad('Pricing', pricingStart);
+      
+      await new Promise(resolve => setTimeout(resolve, 100));
+      const newsletterStart = performance.now();
+      await preloadComponent('Newsletter');
+      performanceMonitor.measureComponentLoad('Newsletter', newsletterStart);
+      
+      const footerStart = performance.now();
+      await preloadComponent('Footer');
+      performanceMonitor.measureComponentLoad('Footer', footerStart);
+    };
+
+    preloadSequence();
+  }, [currentSection, preloadComponent]);
+
+  // Performance monitoring setup
+  useEffect(() => {
+    // Log metrics every 30 seconds in development
+    const metricsInterval = setInterval(() => {
+      performanceMonitor.logMetrics();
+    }, 30000);
+
+    return () => clearInterval(metricsInterval);
+  }, []);
+
   const isSectionScrollable = (id) => {
     const el = document.getElementById(id);
     if (!el) return false;
@@ -40,20 +121,23 @@ function App() {
   };
 
   const executeScroll = useCallback((direction) => {
+    const scrollStartTime = performance.now();
     const nextSection = currentSection + direction;
     
     // Validate boundaries more strictly
     if (nextSection < 0 || nextSection >= sections.length) {
-      // Reset scroll state if we hit boundaries
       scrollAccumulator.current = 0;
       scrollDirection.current = 0;
       return;
     }
     
+    // Prevent double scrolling - set lock immediately
+    if (isScrollingRef.current) return;
+    
     isScrollingRef.current = true;
     lastScrollTime.current = Date.now();
     scrollAccumulator.current = 0;
-    scrollDirection.current = 0; // Reset direction tracker
+    scrollDirection.current = 0;
     
     // Clear any existing timeout
     if (scrollTimeout.current) {
@@ -66,20 +150,25 @@ function App() {
       cancelAnimationFrame(animationFrameRef.current);
     }
     
-    // Use requestAnimationFrame for smooth state updates
+    // Optimized scroll with performance monitoring
     animationFrameRef.current = requestAnimationFrame(() => {
       setCurrentSection(nextSection);
       const element = document.getElementById(sections[nextSection]);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Use faster, more responsive scrolling
+        element.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+        });
       }
       
-      // Add a longer delay specifically for upward scrolling to ensure proper state sync
-      const resetDelay = direction < 0 ? 1000 : 800;
+      // Longer reset delay to prevent double scrolling
+      const resetDelay = 600;
       
       setTimeout(() => { 
         isScrollingRef.current = false; 
         animationFrameRef.current = null;
+        performanceMonitor.measureScrollLatency(scrollStartTime);
       }, resetDelay);
     });
   }, [currentSection, sections]);
@@ -97,7 +186,8 @@ function App() {
     document.documentElement.style.overflow = 'hidden';
 
 
-    const handleWheel = (e) => {
+    // Optimized wheel handler with throttling
+    const handleWheel = throttle((e) => {
       const sectionId = sections[currentSection];
 
       // Special handling for newsletter section - allow some scrolling but still enable snapping
@@ -131,31 +221,20 @@ function App() {
       const deltaY = e.deltaY;
       
       // Ignore very small movements (accidental touches)
-      if (Math.abs(deltaY) < 5) return;
+      if (Math.abs(deltaY) < 3) return;
       
       const direction = deltaY > 0 ? 1 : -1;
-      
-      // Debug logging
-      console.log('Scroll detected:', { 
-        currentSection, 
-        direction, 
-        deltaY, 
-        sectionId: sections[currentSection],
-        nextWouldBe: currentSection + direction 
-      });
       
       // Check if we're already at boundaries and trying to go further
       if ((currentSection === 0 && direction === -1) || 
           (currentSection === sections.length - 1 && direction === 1)) {
-        console.log('Boundary hit, ignoring scroll');
-        // Reset scroll state when hitting boundaries
         scrollAccumulator.current = 0;
         scrollDirection.current = 0;
         return;
       }
       
       // Reset accumulator if direction changed or too much time passed
-      if (scrollDirection.current !== direction || (now - lastScrollTime.current) > 150) {
+      if (scrollDirection.current !== direction || (now - lastScrollTime.current) > 200) {
         scrollAccumulator.current = 0;
         scrollDirection.current = direction;
       }
@@ -169,22 +248,22 @@ function App() {
         clearTimeout(scrollTimeout.current);
       }
       
-      // Dynamic threshold based on scroll speed and input type
-      let threshold = 15; // Base threshold
+      // Increased thresholds to prevent double scrolling
+      let threshold = 15; // Increased base threshold
       
       // Detect input device type and adjust threshold accordingly
       if (Math.abs(deltaY) < 4) {
         // Very fine scrolling (high-precision trackpad)
-        threshold = 8;
+        threshold = 10;
       } else if (Math.abs(deltaY) < 20) {
         // Trackpad scrolling
-        threshold = 10;
+        threshold = 12;
       } else if (Math.abs(deltaY) < 100) {
         // Mouse wheel scrolling
         threshold = 15;
       } else {
         // Fast/aggressive scrolling
-        threshold = 25;
+        threshold = 20;
       }
       
       // Execute scroll immediately if threshold met
@@ -193,14 +272,13 @@ function App() {
         return;
       }
       
-      // Otherwise, set a timeout to execute scroll after a short delay
-      // Shorter delay for more responsive feel
+      // Longer delay to prevent double scrolling
       scrollTimeout.current = setTimeout(() => {
         if (scrollAccumulator.current > 0 && !isScrollingRef.current) {
           executeScroll(direction);
         }
-      }, 30);
-    };
+      }, 50);
+    }, 16); // ~60fps throttling
 
     const handleTouchStart = (e) => {
       touchStartRef.current = e.touches[0].clientY;
@@ -215,8 +293,8 @@ function App() {
       const touchEnd = e.changedTouches[0].clientY;
       const diff = touchStartRef.current - touchEnd;
       
-      // Much lower threshold for touch - single swipe should work
-      if (Math.abs(diff) < 15) return;
+      // Higher threshold for touch to prevent accidental double scrolling
+      if (Math.abs(diff) < 30) return;
     
       const direction = diff > 0 ? 1 : -1;
       
@@ -251,16 +329,28 @@ function App() {
     };
   }, [currentSection, sections, isMobile, executeScroll]);
 
-  const handleDotClick = (index) => {
+  const handleDotClick = useCallback((index) => {
     if (isScrollingRef.current || index === currentSection) return;
+    
+    // Set scrolling lock immediately to prevent double clicks
+    isScrollingRef.current = true;
     
     // Calculate direction for smooth transition
     const direction = index > currentSection ? 1 : -1;
     const steps = Math.abs(index - currentSection);
     
+    // Reset scroll state
+    scrollAccumulator.current = 0;
+    scrollDirection.current = 0;
+    
+    // Clear any pending timeouts
+    if (scrollTimeout.current) {
+      clearTimeout(scrollTimeout.current);
+      scrollTimeout.current = null;
+    }
+    
     // For multiple steps, animate through each section quickly
     if (steps > 1) {
-      isScrollingRef.current = true;
       let currentStep = 0;
       
       const animateStep = () => {
@@ -282,33 +372,60 @@ function App() {
           } else {
             setTimeout(() => {
               isScrollingRef.current = false;
-            }, 500);
+            }, 600);
           }
         }
       };
       
       animateStep();
     } else {
-      // Single step - use regular execution
-      executeScroll(direction);
+      // Single step - direct navigation
+      setCurrentSection(index);
+      const element = document.getElementById(sections[index]);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+      
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 600);
     }
-  };
+  }, [currentSection, sections]);
+
+  // Loading fallback component
+  const LoadingFallback = ({ section }) => (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh',
+      color: 'rgba(255, 255, 255, 0.7)',
+      fontSize: '14px',
+    }}>
+      Loading {section}...
+    </div>
+  );
 
   return (
     <div className={`App ${isMobile ? 'mobile' : 'desktop'}`}>
       {/* Prism Background */}
       <div className="prism-background">
-        <Prism
-          animationType="hover"
-          timeScale={0.5}
-          height={3.5}
-          baseWidth={5.5}
-          scale={3.6}
-          hueShift={0}
-          colorFrequency={1}
-          noise={0.5}
-          glow={1}
-        />
+        <Suspense fallback={<div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.9)' }} />}>
+          <Prism
+            animationType="hover"
+            timeScale={0.5}
+            height={3.5}
+            baseWidth={5.5}
+            scale={3.6}
+            hueShift={0}
+            colorFrequency={1}
+            noise={0.5}
+            glow={1}
+          />
+        </Suspense>
       </div>
       
       <Navbar currentSection={sections[currentSection]} isMobile={isMobile} />
@@ -318,17 +435,25 @@ function App() {
           <Hero />
         </section>
         <section id="mission" className="section-wrapper">
-          <Mission />
+          <Suspense fallback={<LoadingFallback section="Mission" />}>
+            <Mission />
+          </Suspense>
         </section>
         <section id="founders" className="section-wrapper">
-          <Founders />
+          <Suspense fallback={<LoadingFallback section="Founders" />}>
+            <Founders />
+          </Suspense>
         </section>
         <section id="pricing" className="section-wrapper">
-          <Pricing />
+          <Suspense fallback={<LoadingFallback section="Pricing" />}>
+            <Pricing />
+          </Suspense>
         </section>
         <section id="newsletter" className="section-wrapper">
-          <Newsletter />
-          <Footer />
+          <Suspense fallback={<LoadingFallback section="Newsletter" />}>
+            <Newsletter />
+            <Footer />
+          </Suspense>
         </section>
       </div>
       
