@@ -43,12 +43,13 @@
   contain: layout style paint;
 }
 
-/* Lightweight static background for mobile (no WebGL) */
+/* Lightweight static blue background for mobile (no WebGL) */
 .prism-fallback {
   background:
-    radial-gradient(circle at 20% 20%, rgba(201, 255, 0, 0.18), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(102, 130, 255, 0.22), transparent 45%),
-    #0a0a0a;
+    radial-gradient(circle at 18% 12%, rgba(91, 140, 255, 0.28), transparent 45%),
+    radial-gradient(circle at 82% 75%, rgba(47, 86, 200, 0.38), transparent 52%),
+    radial-gradient(circle at 50% 50%, rgba(20, 40, 110, 0.4), transparent 70%),
+    #0a1330;
   will-change: auto;
 }
 
@@ -151,8 +152,8 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(250, 248, 243, 0.3);
-  border: 2px solid rgba(250, 248, 243, 0.5);
+  background: rgba(174, 191, 255, 0.3);
+  border: 2px solid rgba(120, 160, 255, 0.5);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, background, border-color;
@@ -167,7 +168,7 @@
 }
 
 .scroll-indicator .dot:hover {
-  background: rgba(250, 248, 243, 0.6);
+  background: rgba(174, 191, 255, 0.6);
   transform: translate3d(0, 0, 0) scale(1.2);
 }
 

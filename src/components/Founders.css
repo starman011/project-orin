@@ -1,6 +1,6 @@
 .founders {
     padding: var(--section-padding);
-    background: linear-gradient(135deg, #000000 0%, var(--black) 100%);
+    background: transparent;
   }
   
   .founders-grid {
@@ -26,7 +26,7 @@
   .founder-avatar {
     width: 120px;
     height: 120px;
-    background: linear-gradient(135deg, var(--primary) 0%, #a3ff00 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
     border-radius: 50%;
     margin: 0 auto 20px;
     display: flex;
@@ -34,23 +34,24 @@
     justify-content: center;
     font-size: 36px;
     font-weight: bold;
-    color: var(--dark);
+    color: #ffffff;
   }
-  
+
   .founder-name {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 5px;
+    color: var(--text-light);
   }
-  
+
   .founder-role {
-    color: var(--black);
+    color: var(--primary);
     font-size: 16px;
     margin-bottom: 15px;
   }
-  
+
   .founder-bio {
-    color: var(--black);
+    color: var(--text-dim);
     font-size: 14px;
     line-height: 1.6;
   }

@@ -6,26 +6,22 @@
     width: 100%;
     position: relative;
   }
-  
+
   .newsletter-content {
-    background: rgba(250, 248, 243, 0.9);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(232, 226, 213, 0.3);
     border-radius: 25px;
-    padding: 40px 45px; /* Slightly increased for better appearance */
+    padding: 40px 45px;
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
     text-align: center;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
     transform: translateY(-20px); /* Slight upward shift for visual balance */
   }
-  
+
   .newsletter-header {
     margin-bottom: 30px;
   }
-  
+
   .newsletter-icon {
     color: var(--primary);
     margin-bottom: 12px;
@@ -33,61 +29,62 @@
     width: 42px;
     height: 42px;
   }
-  
+
   @keyframes sparkle {
     0%, 100% { transform: scale(1) rotate(0deg); }
     50% { transform: scale(1.1) rotate(5deg); }
   }
-  
+
   .newsletter-header h2 {
     font-size: clamp(26px, 3.5vw, 38px);
     font-weight: 800;
     margin-bottom: 10px;
-    background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+    background: linear-gradient(135deg, var(--light) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 1.2;
   }
-  
+
   .newsletter-header p {
     font-size: clamp(14px, 1.8vw, 16px);
-    color: var(--black);
+    color: var(--text-dim);
     max-width: 480px;
     margin: 0 auto;
     line-height: 1.5;
   }
-  
+
   .newsletter-form {
     margin-bottom: 22px;
   }
-  
+
   .input-group {
     display: flex;
     gap: 0;
     max-width: 460px;
     margin: 0 auto 12px;
-    background: var(--beige-light);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 50px;
     padding: 5px;
-    border: 2px solid var(--beige-dark);
+    border: 1px solid var(--glass-border);
     transition: all 0.3s ease;
     height: 50px;
     align-items: center;
   }
-  
+
   .input-group:focus-within {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(201, 255, 0, 0.1);
+    box-shadow: 0 0 0 3px rgba(91, 140, 255, 0.18);
   }
-  
+
   .input-icon {
     margin: 0 12px;
-    color: var(--black);
+    color: var(--text-dim);
     width: 20px;
     height: 20px;
     flex-shrink: 0;
   }
-  
+
   .input-group input {
     flex: 1;
     border: none;
@@ -95,16 +92,16 @@
     padding: 8px 0;
     font-size: 14px;
     outline: none;
-    color: var(--dark);
+    color: var(--text-light);
   }
-  
+
   .input-group input::placeholder {
-    color: var(--black);
+    color: var(--text-dim);
   }
-  
+
   .btn-subscribe {
     background: var(--primary);
-    color: var(--dark);
+    color: #ffffff;
     border: none;
     padding: 10px 26px;
     border-radius: 45px;
@@ -114,39 +111,40 @@
     font-size: 14px;
     flex-shrink: 0;
   }
-  
+
   .btn-subscribe:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(201, 255, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(91, 140, 255, 0.4);
   }
-  
+
   .newsletter-privacy {
     font-size: 12px;
-    color: var(--black);
+    color: var(--text-dim);
     margin-bottom: 0;
   }
-  
+
   .success-message {
     padding: 30px;
   }
-  
+
   .success-message svg {
     color: #10b981;
     margin-bottom: 12px;
     width: 42px;
     height: 42px;
   }
-  
+
   .success-message h3 {
     font-size: 22px;
     margin-bottom: 8px;
+    color: var(--text-light);
   }
-  
+
   .success-message p {
     font-size: 14px;
-    color: var(--black);
+    color: var(--text-dim);
   }
-  
+
   .newsletter-features {
     display: flex;
     justify-content: center;
@@ -154,20 +152,20 @@
     flex-wrap: wrap;
     margin-top: 18px;
   }
-  
+
   .feature {
     display: flex;
     align-items: center;
     gap: 6px;
     font-size: 13px;
-    color: var(--black);
+    color: var(--text-light);
   }
-  
+
   .feature-icon {
     color: var(--primary);
     flex-shrink: 0;
   }
-  
+
   /* Mobile Responsive */
   @media (max-width: 768px) {
     .newsletter-content {
@@ -175,28 +173,28 @@
       border-radius: 20px;
       transform: translateY(0); /* Remove transform on mobile */
     }
-  
+
     .newsletter-header h2 {
       font-size: 26px;
     }
-  
+
     .input-group {
       flex-direction: column;
       padding: 6px;
       height: auto;
     }
-  
+
     .input-group input {
       padding: 10px 12px;
       width: 100%;
     }
-  
+
     .btn-subscribe {
       width: 100%;
       margin-top: 6px;
       padding: 12px;
     }
-  
+
     .newsletter-features {
       gap: 18px;
     }

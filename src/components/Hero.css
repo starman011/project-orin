@@ -3,7 +3,7 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--light) 0%, #f0fff4 100%);
+    background: transparent;
     position: relative;
     overflow: hidden;
   }
@@ -42,11 +42,13 @@
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 30px;
+    color: var(--text-light);
   }
-  
+
   .hero-text h1 span {
-    background: linear-gradient(135deg, var(--primary) 0%, #a3ff00 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--light) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   
@@ -71,10 +73,10 @@
   }
   
   .hero-visual-box {
-    background: linear-gradient(135deg, var(--primary) 0%, #a3ff00 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
     border-radius: 30px;
     padding: 60px;
-    box-shadow: 0 30px 60px rgba(201, 255, 0, 0.2);
+    box-shadow: 0 30px 60px rgba(91, 140, 255, 0.3);
     transform: perspective(1000px) rotateY(-5deg);
     transition: transform 0.3s ease;
   }
@@ -84,10 +86,13 @@
   }
   
   .hero-visual-content {
-    background: var(--light);
+    background: rgba(8, 16, 44, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-radius: 20px;
     padding: 40px;
     text-align: center;
+    color: var(--text-light);
   }
   
   .hero-visual-content svg {

@@ -80,7 +80,7 @@
 
   .social-links button:hover {
     background: var(--primary);
-    color: var(--dark);
+    color: #ffffff;
     transform: translateY(-2px);
   }
   
