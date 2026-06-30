@@ -17,13 +17,20 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-main">
           <div className="footer-brand">
-            <h3 className="footer-logo">Orin</h3>
+            <h3 className="footer-logo">
+              <img
+                src={`${process.env.PUBLIC_URL}/logo192.png`}
+                alt="Orin logo"
+                className="footer-logo-img"
+              />
+              <span>Orin</span>
+            </h3>
             <p>Transforming ideas into reality with AI-powered innovation.</p>
             <div className="social-links">
-              <a href="#" aria-label="GitHub"><Github size={20} /></a>
-              <a href="#" aria-label="Twitter"><Twitter size={20} /></a>
-              <a href="#" aria-label="LinkedIn"><Linkedin size={20} /></a>
-              <a href="#" aria-label="Email"><Mail size={20} /></a>
+              <button type="button" aria-label="GitHub"><Github size={20} /></button>
+              <button type="button" aria-label="Twitter"><Twitter size={20} /></button>
+              <button type="button" aria-label="LinkedIn"><Linkedin size={20} /></button>
+              <button type="button" aria-label="Email"><Mail size={20} /></button>
             </div>
           </div>
           
@@ -31,30 +38,30 @@ const Footer = () => {
             <div className="footer-column">
               <h4>Product</h4>
               <ul>
-                <li><a onClick={() => scrollToSection('home')}>Features</a></li>
-                <li><a onClick={() => scrollToSection('pricing')}>Pricing</a></li>
-                <li><a href="#">API</a></li>
-                <li><a href="#">Documentation</a></li>
+                <li><button type="button" className="footer-link" onClick={() => scrollToSection('home')}>Features</button></li>
+                <li><button type="button" className="footer-link" onClick={() => scrollToSection('showcase')}>Showcase</button></li>
+                <li><button type="button" className="footer-link">API</button></li>
+                <li><button type="button" className="footer-link">Documentation</button></li>
               </ul>
             </div>
             
             <div className="footer-column">
               <h4>Company</h4>
               <ul>
-                <li><a onClick={() => scrollToSection('mission')}>Mission</a></li>
-                <li><a onClick={() => scrollToSection('founders')}>Team</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Blog</a></li>
+                <li><button type="button" className="footer-link" onClick={() => scrollToSection('mission')}>Mission</button></li>
+                <li><button type="button" className="footer-link" onClick={() => scrollToSection('founders')}>Team</button></li>
+                <li><button type="button" className="footer-link">Careers</button></li>
+                <li><button type="button" className="footer-link">Blog</button></li>
               </ul>
             </div>
             
             <div className="footer-column">
               <h4>Support</h4>
               <ul>
-                <li><a onClick={() => scrollToSection('contact')}>Contact</a></li>
-                <li><a href="#">Help Center</a></li>
-                <li><a href="#">Status</a></li>
-                <li><a href="#">Terms of Service</a></li>
+                <li><button type="button" className="footer-link" onClick={() => scrollToSection('contact')}>Contact</button></li>
+                <li><button type="button" className="footer-link">Help Center</button></li>
+                <li><button type="button" className="footer-link">Status</button></li>
+                <li><button type="button" className="footer-link">Terms of Service</button></li>
               </ul>
             </div>
           </div>

@@ -104,7 +104,7 @@
   /* Glass morphism with beige tint */
   .mission-card,
   .founder-card,
-  .pricing-card,
+  .showcase-card,
   .contact-form {
     background: rgba(250, 248, 243, 0.85) !important;
     backdrop-filter: blur(20px);
@@ -115,8 +115,8 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
-  
-  .pricing-card.featured {
+
+  .showcase-feature {
     background: rgba(10, 10, 10, 0.9) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -165,7 +165,7 @@
   /* Section backgrounds */
   .mission,
   .founders,
-  .pricing,
+  .showcase,
   .contact,
   .newsletter {
     background: transparent !important;

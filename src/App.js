@@ -7,7 +7,7 @@ import './App.css';
 // Lazy load heavy components
 const Mission = lazy(() => import('./components/Mission'));
 const Founders = lazy(() => import('./components/Founders'));
-const Pricing = lazy(() => import('./components/Pricing'));
+const Showcase = lazy(() => import('./components/Showcase'));
 const Newsletter = lazy(() => import('./components/Newsletter'));
 const Footer = lazy(() => import('./components/Footer'));
 const Prism = lazy(() => import('./components/Prism'));
@@ -25,7 +25,7 @@ function App() {
   const boundaryResetTimeout = useRef(null);
   const preloadedComponents = useRef(new Set());
   
-  const sections = useMemo(() => ['home', 'mission', 'founders', 'pricing', 'newsletter'], []);
+  const sections = useMemo(() => ['home', 'mission', 'founders', 'showcase', 'newsletter'], []);
 
   // Preload components strategy
   const preloadComponent = useCallback(async (componentName) => {
@@ -39,8 +39,8 @@ function App() {
         case 'Founders':
           await import('./components/Founders');
           break;
-        case 'Pricing':
-          await import('./components/Pricing');
+        case 'Showcase':
+          await import('./components/Showcase');
           break;
         case 'Newsletter':
           await import('./components/Newsletter');
@@ -67,46 +67,47 @@ function App() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Progressive component preloading after initial load
+  // Progressive component preloading after initial load.
+  // Runs once on mount — deps are stable, so section changes don't re-trigger
+  // the whole sequence (which would spawn redundant timers on every scroll).
   useEffect(() => {
     const preloadSequence = async () => {
       // Wait for initial render to complete
       await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Preload next section component first
-      if (currentSection === 0) {
-        const startTime = performance.now();
-        await preloadComponent('Mission');
-        performanceMonitor.measureComponentLoad('Mission', startTime);
-      }
-      
-      // Then preload remaining components in priority order
+
+      // Preload the next section first, then the rest in priority order
+      const startTime = performance.now();
+      await preloadComponent('Mission');
+      performanceMonitor.measureComponentLoad('Mission', startTime);
+
       await new Promise(resolve => setTimeout(resolve, 100));
       const foundersStart = performance.now();
       await preloadComponent('Founders');
       performanceMonitor.measureComponentLoad('Founders', foundersStart);
-      
+
       await new Promise(resolve => setTimeout(resolve, 100));
-      const pricingStart = performance.now();
-      await preloadComponent('Pricing');
-      performanceMonitor.measureComponentLoad('Pricing', pricingStart);
-      
+      const showcaseStart = performance.now();
+      await preloadComponent('Showcase');
+      performanceMonitor.measureComponentLoad('Showcase', showcaseStart);
+
       await new Promise(resolve => setTimeout(resolve, 100));
       const newsletterStart = performance.now();
       await preloadComponent('Newsletter');
       performanceMonitor.measureComponentLoad('Newsletter', newsletterStart);
-      
+
       const footerStart = performance.now();
       await preloadComponent('Footer');
       performanceMonitor.measureComponentLoad('Footer', footerStart);
     };
 
     preloadSequence();
-  }, [currentSection, preloadComponent]);
+  }, [preloadComponent]);
 
-  // Performance monitoring setup
+  // Performance monitoring setup (development only)
   useEffect(() => {
-    // Log metrics every 30 seconds in development
+    if (process.env.NODE_ENV !== 'development') return;
+
+    // Log metrics every 30 seconds
     const metricsInterval = setInterval(() => {
       performanceMonitor.logMetrics();
     }, 30000);
@@ -411,22 +412,29 @@ function App() {
 
   return (
     <div className={`App ${isMobile ? 'mobile' : 'desktop'}`}>
-      {/* Prism Background */}
-      <div className="prism-background">
-        <Suspense fallback={<div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.9)' }} />}>
-          <Prism
-            animationType="hover"
-            timeScale={0.5}
-            height={3.5}
-            baseWidth={5.5}
-            scale={3.6}
-            hueShift={0}
-            colorFrequency={1}
-            noise={0.5}
-            glow={1}
-          />
-        </Suspense>
-      </div>
+      {/* Prism Background — WebGL on desktop, lightweight gradient on mobile.
+          The prism animates via requestAnimationFrame continuously; on mobile
+          there's no pointer to drive the hover effect, so it would only burn
+          battery/GPU. Render a static gradient there instead. */}
+      {isMobile ? (
+        <div className="prism-background prism-fallback" />
+      ) : (
+        <div className="prism-background">
+          <Suspense fallback={<div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.9)' }} />}>
+            <Prism
+              animationType="hover"
+              timeScale={0.5}
+              height={3.5}
+              baseWidth={5.5}
+              scale={3.6}
+              hueShift={0}
+              colorFrequency={1}
+              noise={0.5}
+              glow={1}
+            />
+          </Suspense>
+        </div>
+      )}
       
       <Navbar currentSection={sections[currentSection]} isMobile={isMobile} />
       
@@ -444,9 +452,9 @@ function App() {
             <Founders />
           </Suspense>
         </section>
-        <section id="pricing" className="section-wrapper">
-          <Suspense fallback={<LoadingFallback section="Pricing" />}>
-            <Pricing />
+        <section id="showcase" className="section-wrapper">
+          <Suspense fallback={<LoadingFallback section="Showcase" />}>
+            <Showcase />
           </Suspense>
         </section>
         <section id="newsletter" className="section-wrapper">

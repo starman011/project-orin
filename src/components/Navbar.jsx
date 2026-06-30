@@ -25,39 +25,51 @@ const Navbar = ({ currentSection }) => {
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-container">
-        <div className="logo">Orin</div>
+        <div className="logo" onClick={() => scrollToSection('home')}>
+          <img
+            src={`${process.env.PUBLIC_URL}/logo192.png`}
+            alt="Orin logo"
+            className="logo-img"
+          />
+          <span className="logo-text">Orin</span>
+        </div>
         
         <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-          <a 
+          <button
+            type="button"
             onClick={() => scrollToSection('home')}
-            className={currentSection === 'home' ? 'active' : ''}
+            className={`nav-link ${currentSection === 'home' ? 'active' : ''}`}
           >
             Home
-          </a>
-          <a 
+          </button>
+          <button
+            type="button"
             onClick={() => scrollToSection('mission')}
-            className={currentSection === 'mission' ? 'active' : ''}
+            className={`nav-link ${currentSection === 'mission' ? 'active' : ''}`}
           >
             Mission
-          </a>
-          <a 
+          </button>
+          <button
+            type="button"
             onClick={() => scrollToSection('founders')}
-            className={currentSection === 'founders' ? 'active' : ''}
+            className={`nav-link ${currentSection === 'founders' ? 'active' : ''}`}
           >
             Team
-          </a>
-          <a 
-            onClick={() => scrollToSection('pricing')}
-            className={currentSection === 'pricing' ? 'active' : ''}
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('showcase')}
+            className={`nav-link ${currentSection === 'showcase' ? 'active' : ''}`}
           >
-            Pricing
-          </a>
-          <a 
+            Showcase
+          </button>
+          <button
+            type="button"
             onClick={() => scrollToSection('contact')}
-            className={currentSection === 'contact' ? 'active' : ''}
+            className={`nav-link ${currentSection === 'contact' ? 'active' : ''}`}
           >
             Contact
-          </a>
+          </button>
           <button className="btn-primary">Get Started</button>
         </div>
 

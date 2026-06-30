@@ -43,6 +43,15 @@
   contain: layout style paint;
 }
 
+/* Lightweight static background for mobile (no WebGL) */
+.prism-fallback {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(201, 255, 0, 0.18), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(102, 130, 255, 0.22), transparent 45%),
+    #0a0a0a;
+  will-change: auto;
+}
+
 .sections-container {
   position: relative;
   height: 100vh;

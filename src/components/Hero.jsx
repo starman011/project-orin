@@ -24,7 +24,15 @@ const Hero = () => {
             <button className="btn-primary">
               Start Free Trial <ArrowRight size={18} />
             </button>
-            <button className="btn-secondary">View Pricing</button>
+            <button
+              className="btn-secondary"
+              onClick={() => {
+                const el = document.getElementById('showcase');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              View Our Work
+            </button>
           </div>
         </motion.div>
 
