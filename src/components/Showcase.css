@@ -19,7 +19,9 @@
 }
 
 .showcase-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   align-self: flex-start;
   background: var(--primary);
   color: var(--dark);
@@ -44,6 +46,31 @@
   color: rgba(250, 248, 243, 0.75);
   line-height: 1.7;
   margin-bottom: 28px;
+  max-width: 460px;
+}
+
+.showcase-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.showcase-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(250, 248, 243, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 5px 12px;
+  border-radius: 50px;
+}
+
+.showcase-meta {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(250, 248, 243, 0.55);
+  margin-bottom: 24px;
   max-width: 460px;
 }
 

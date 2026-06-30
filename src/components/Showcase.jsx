@@ -1,5 +1,5 @@
 import React from 'react';
-import { Crosshair, Activity, Boxes, Gauge, ArrowUpRight } from 'lucide-react';
+import { Plane, Satellite, Rocket, Sparkles, Globe, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import './Showcase.css';
@@ -12,33 +12,35 @@ const Showcase = () => {
 
   const capabilities = [
     {
-      icon: <Crosshair size={28} />,
-      title: 'Real-Time Detection',
-      description: 'Pinpoint and label objects the instant they enter frame, with millisecond latency.'
+      icon: <Plane size={28} />,
+      title: 'Flights & Airports',
+      description: 'Live aircraft positions, routes, altitude and speed from worldwide ADS-B. Search any flight, airline, or airport.'
     },
     {
-      icon: <Boxes size={28} />,
-      title: 'Multi-Object Tracking',
-      description: 'Follow dozens of targets at once across frames without losing their identities.'
+      icon: <Satellite size={28} />,
+      title: 'ISS & Satellites',
+      description: 'Follow the ISS with live position and crew, plus orbital satellites computed from TLE data.'
     },
     {
-      icon: <Activity size={28} />,
-      title: 'Live Analytics',
-      description: 'Turn raw motion into dashboards — counts, paths, and dwell time as it happens.'
+      icon: <Rocket size={28} />,
+      title: 'Launches & Asteroids',
+      description: 'Rocket-launch countdowns and pad details, plus near-Earth asteroids and close approaches from NASA.'
     },
     {
-      icon: <Gauge size={28} />,
-      title: 'Edge-Ready Speed',
-      description: 'Optimized models run on-device, from cloud GPUs down to embedded cameras.'
+      icon: <Sparkles size={28} />,
+      title: 'Deep Space',
+      description: 'Explore the DESI galaxy catalog and the cosmic web, rendered live in interactive 3D.'
     }
   ];
+
+  const tags = ['Real-time', 'Free', 'No signup', 'Any device'];
 
   return (
     <section className="showcase" id="showcase" ref={ref}>
       <div className="container">
         <div className="section-header">
           <h2>Highlight Project: ObjectTracer</h2>
-          <p>See what Orin builds — AI-powered object detection and tracking, live in production</p>
+          <p>Track everything that moves above you — live, on one interactive 3D globe</p>
         </div>
 
         <div className="showcase-grid">
@@ -48,11 +50,23 @@ const Showcase = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <span className="showcase-badge">Flagship</span>
+            <span className="showcase-badge">
+              <Globe size={14} /> Flagship Project
+            </span>
             <h3 className="showcase-title">ObjectTracer.com</h3>
             <p className="showcase-tagline">
-              Computer vision that watches, counts, and understands the world in
-              motion — built end to end on the Orin platform.
+              A real-time 3D tracker for flights, satellites, the ISS, rocket
+              launches, asteroids, and deep-space galaxies — all rendered on a
+              single interactive globe, right in your browser.
+            </p>
+            <div className="showcase-tags">
+              {tags.map((tag) => (
+                <span key={tag} className="showcase-tag">{tag}</span>
+              ))}
+            </div>
+            <p className="showcase-meta">
+              Built with React + Three.js, a Go backend, and open feeds (ADS-B,
+              TLE, and space-agency data).
             </p>
             <div className="showcase-actions">
               <a
