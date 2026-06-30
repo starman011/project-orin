@@ -14,19 +14,19 @@ const Founders = () => {
       initials: 'MK.',
       name: 'Md Saqlain Khan',
       role: 'CEO, CTO & Co-Founder',
-      bio: 'Visionary leader with 10+ years in tech innovation. Passionate about democratizing AI for creators worldwide.'
+      bio: 'Visionary leader with 10+ years in tech. Driven to make the sky and near-space visible to everyone, in real time.'
     },
     {
       initials: 'SH.',
       name: 'Safeerul Haque Syed',
       role: 'CEO, CFO & Co-Founder',
-      bio: 'Technical architect behind our AI platform. Expert in machine learning and distributed systems.'
+      bio: 'Technical architect behind the platform. Expert in real-time data pipelines, 3D rendering, and distributed systems.'
     },
     {
       initials: 'AK',
       name: 'Afreen Anjum Khan',
       role: 'CEO, CPO, CDO & Co-Founder',
-      bio: 'Product strategist focused on user experience. Champions human-centered design in AI applications.'
+      bio: 'Product strategist focused on user experience. Champions clear, human-centered design for complex live data.'
     }
   ];
 
