@@ -28,10 +28,10 @@ const Navbar = ({ currentSection }) => {
         <div className="logo" onClick={() => scrollToSection('home')}>
           <img
             src={`${process.env.PUBLIC_URL}/logo192.png`}
-            alt="Orin logo"
+            alt="Orion logo"
             className="logo-img"
           />
-          <span className="logo-text">Orin</span>
+          <span className="logo-text">Orion</span>
         </div>
         
         <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>

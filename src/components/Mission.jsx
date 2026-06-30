@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, Users, Zap } from 'lucide-react';
+import { Eye, Activity, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import './Mission.css';
@@ -12,19 +12,19 @@ const Mission = () => {
 
   const missionData = [
     {
-      icon: <Target size={32} />,
-      title: 'Innovation First',
-      description: 'We believe in pushing boundaries and challenging the status quo to create breakthrough solutions that matter.'
+      icon: <Eye size={32} />,
+      title: 'Make the Invisible Visible',
+      description: 'Aircraft, the ISS, satellites, rockets, asteroids, and distant galaxies — all on one living 3D globe you can explore at a glance.'
+    },
+    {
+      icon: <Activity size={32} />,
+      title: 'Real-Time & Open',
+      description: 'We turn open, real-time feeds — ADS-B, TLE, and space-agency data — into something anyone can read the moment it happens.'
     },
     {
       icon: <Users size={32} />,
-      title: 'Collaboration',
-      description: 'Building bridges between ideas and execution through seamless teamwork and AI-enhanced workflows.'
-    },
-    {
-      icon: <Zap size={32} />,
-      title: 'Speed & Efficiency',
-      description: 'Accelerating the journey from concept to creation with cutting-edge technology and intelligent automation.'
+      title: 'Free for Everyone',
+      description: 'The sky and near-space belong to all of us. ObjectTracer is free, ad-free, and open — no account, no paywall, no barrier.'
     }
   ];
 
@@ -33,7 +33,7 @@ const Mission = () => {
       <div className="container">
         <div className="section-header">
           <h2>Our Mission</h2>
-          <p>Empowering creators and innovators to build the future, one idea at a time</p>
+          <p>To make everything moving above us — every flight, satellite, rocket, and distant galaxy — visible to everyone, in real time, for free.</p>
         </div>
         
         <div className="mission-grid">

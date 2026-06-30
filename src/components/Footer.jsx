@@ -20,12 +20,12 @@ const Footer = () => {
             <h3 className="footer-logo">
               <img
                 src={`${process.env.PUBLIC_URL}/logo192.png`}
-                alt="Orin logo"
+                alt="Orion logo"
                 className="footer-logo-img"
               />
-              <span>Orin</span>
+              <span>Orion</span>
             </h3>
-            <p>Transforming ideas into reality with AI-powered innovation.</p>
+            <p>Parent company of ObjectTracer — making everything above the horizon visible to everyone, in real time.</p>
             <div className="social-links">
               <button type="button" aria-label="GitHub"><Github size={20} /></button>
               <button type="button" aria-label="Twitter"><Twitter size={20} /></button>
@@ -68,7 +68,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {currentYear} Orin. All rights reserved.</p>
+          <p>&copy; {currentYear} Orion. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -35,7 +35,7 @@ const Founders = () => {
       <div className="container">
         <div className="section-header">
           <h2>Meet Our Founders</h2>
-          <p>The visionaries behind Orin's revolutionary platform</p>
+          <p>The team building ObjectTracer and the platforms behind Orion</p>
         </div>
         
         <div className="founders-grid">

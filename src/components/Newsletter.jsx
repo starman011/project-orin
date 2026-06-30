@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, CheckCircle, Sparkles } from 'lucide-react';
+import { Mail, CheckCircle, Sparkles, Newspaper, Lightbulb, Gift } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './Newsletter.css';
 
@@ -68,15 +68,15 @@ const Newsletter = () => {
 
           <div className="newsletter-features">
             <div className="feature">
-              <span className="feature-icon">🚀</span>
+              <Newspaper className="feature-icon" size={16} />
               <span>Weekly insights</span>
             </div>
             <div className="feature">
-              <span className="feature-icon">💡</span>
+              <Lightbulb className="feature-icon" size={16} />
               <span>Pro tips</span>
             </div>
             <div className="feature">
-              <span className="feature-icon">🎁</span>
+              <Gift className="feature-icon" size={16} />
               <span>Exclusive offers</span>
             </div>
           </div>

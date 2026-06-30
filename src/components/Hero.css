@@ -62,9 +62,11 @@
     flex-wrap: wrap;
   }
   
-  .hero-buttons button {
+  .hero-buttons button,
+  .hero-buttons .btn-primary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
   }
   
@@ -117,7 +119,8 @@
       width: 100%;
     }
   
-    .hero-buttons button {
+    .hero-buttons button,
+    .hero-buttons .btn-primary {
       width: 100%;
     }
   

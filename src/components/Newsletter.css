@@ -164,7 +164,8 @@
   }
   
   .feature-icon {
-    font-size: 18px;
+    color: var(--primary);
+    flex-shrink: 0;
   }
   
   /* Mobile Responsive */

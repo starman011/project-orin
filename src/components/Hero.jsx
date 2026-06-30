@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Rocket, ArrowRight } from 'lucide-react';
+import { Globe, ArrowUpRight } from 'lucide-react';
 import './Hero.css';
 
 const Hero = () => {
@@ -14,16 +14,22 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
         >
           <h1>
-            Where We <span>Harbour Local</span> And Support Communities
+            We Are the Parent Company of <span>ObjectTracer</span>
           </h1>
           <p>
-            Orin is revolutionizing the way teams collaborate, innovate, and bring 
-            groundbreaking ideas to life with AI-powered tools.
+            Orion builds real-time platforms that make the world above us
+            visible to everyone. ObjectTracer, our flagship, puts every flight,
+            satellite, rocket, and distant galaxy on one live 3D globe.
           </p>
           <div className="hero-buttons">
-            <button className="btn-primary">
-              Start Free Trial <ArrowRight size={18} />
-            </button>
+            <a
+              className="btn-primary"
+              href="https://objecttracer.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Explore ObjectTracer <ArrowUpRight size={18} />
+            </a>
             <button
               className="btn-secondary"
               onClick={() => {
@@ -31,7 +37,7 @@ const Hero = () => {
                 if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
             >
-              View Our Work
+              See What We Build
             </button>
           </div>
         </motion.div>
@@ -44,9 +50,9 @@ const Hero = () => {
         >
           <div className="hero-visual-box">
             <div className="hero-visual-content">
-              <Rocket size={48} />
-              <h2>10x Faster</h2>
-              <p>Innovation at the speed of thought</p>
+              <Globe size={48} />
+              <h2>One Live Globe</h2>
+              <p>Everything above the horizon, in real time</p>
             </div>
           </div>
         </motion.div>
